@@ -1,0 +1,74 @@
+Stride
+- Spoofing
+- Tampering
+- Repudiation 
+- Information Disclosure
+- Denial of Service
+- Elevation of Privilege.
+
+Docker Threat Modeling
+Given Docker's system components and the STRIDE framework, identify five potential threats that may arise.
+
+- Elevation of privilege: when a Dockerfile does not specify a user, it defaults to executing the container using the root user, affecting client authorization and the Dockerfile.
+- Information Disclosure: the client may expose sensitive information such as secrets that are hardcoded in configuration files that could impact the security of the Dockerfile.
+-  
+- 
+-
+
+Kubernetes Threat Modeling
+Given Kubernetes' system components and the STRIDE framework, identify five potential threats that may arise.
+
+-
+-
+-
+-
+-
+
+Docker-bench Run Results and Analysis
+From the failed findings, select and document 3 findings from the Docker-bench results that you want to harden based on the 5 attack surface areas you identified in Step 1. At least 1 of the 3 hardened findings should be different from the ones mentioned in the exercise (i.e. 5.10, 5.14, and 5.22).
+
+```sh
+./docker-bench --include-test-output | grep FAIL
+```
+
+- [FAIL] 3.19 Ensure that /etc/default/docker file ownership is set to root:root (Automated)
+
+**Audit:**
+
+```sh
+stat -c %U:%G /etc/default/docker | grep -v root:root
+```
+
+**Remediation:**
+
+```sh
+sudo chown root:root /etc/default/docker
+```
+
+- [FAIL] 3.22 Ensure that /etc/default/docker file permissions are set to 644 or more restrictive (Automated)
+
+**Audit:**
+
+```sh
+stat -c %a /etc/default/docker
+```
+
+**Remediation:**
+
+```sh
+sudo chmod 644 /etc/default/docker
+```
+
+- [FAIL] 4.5 Ensure Content trust for Docker is Enabled (Automated)
+
+**Audit:**
+
+```sh
+echo $DOCKER_CONTENT_TRUST 
+```
+
+**Remediation:**
+
+```sh
+export DOCKER_CONTENT_TRUST=1
+```
