@@ -1,6 +1,17 @@
 1. Incident commander name: Danilo Britto
 2. Executive Summary of what happened: 
+Three pods are deployed using an insecure docker image with crypto-mining code and the pod names are: 
+cryptotonight, minergate and moneropool.
 3. Summary of what was affected:
-4. Summmry of the impact:
+some parts in our cluster was affected by these dangerous pods. The resource consumption was increase, 
+some critical information was exposed and some files was corrupted/modified intentionally.
+4. Summary of the impact:
+due to some some dangerous pod we got into an outage of all our services.
 5. Summary of the remediation steps:
+Using kube-bench and docker-bench we was able to identify what's happening and using CIS Docker Benchmark
+and CIS Rancher Benchmark we was able to apply some remedations and solve the flaws in our current
+implementation and stack. 
 6. Summary of lessons learned:
+We should always review what kind of docker image we're using and what kind of code they are running. 
+Also, we should always check the Falco Dashboard in Grafana. Admission controllers can also be 
+configured to disallow unknown images to be used to create containers.
