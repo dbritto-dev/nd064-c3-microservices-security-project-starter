@@ -1,6 +1,6 @@
 1. How will you test the changes:
 
-We can use kube-bench to get all the failed findings in our cluster and using it list to can go through
+We can use kube-bench to get all the failed findings in our cluster and using it to can go through
 of each point and apply some remediation for each point using CIS Rancher Benchmark and then we can 
 use kube-bench again to get all the new failed findings and checking if the number of failed findings was
 decreased. We can continuously doing these until we don't get more failed findings.

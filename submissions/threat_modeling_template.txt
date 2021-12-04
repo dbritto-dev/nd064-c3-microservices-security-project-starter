@@ -11,18 +11,18 @@ Given Docker's system components and the STRIDE framework, identify five potenti
 
 - Elevation of privilege: when a Dockerfile does not specify a user, it defaults to executing the container using the root user, affecting client authorization and the Dockerfile.
 - Information Disclosure: the client may expose sensitive information such as secrets that are hardcoded in configuration files that could impact the security of the Dockerfile.
--  
-- 
--
+- Denial of Service - Excessive traffic from the client could overwhelm the daemon (often on the same machine) and could cause it to crash, leading to a client compromise.
+- Spoofing - Client traffic from the Docker client to the Docker daemon or registry could be spoofed, or intercepted by a malicious party and replayed. Transport Layer Security (TLS) can be implemented to secure communication affecting the client.
+- Tampering - An attacker gets control of the Docker client. This could lead to tampering of the Dockerfile that’s used to build the image affecting Dockerfile.
 
 Kubernetes Threat Modeling
 Given Kubernetes' system components and the STRIDE framework, identify five potential threats that may arise.
 
--
--
--
--
--
+- Spoofing - Calls to the API server could be spoofed by a malicious caller. This can be mitigated by ensuring all calls to the API server are over TLS, ensuring that anonymous and basic authentication is not used.
+- Tampering - The kubelet configuration can be tampered with. Specifically, the kubelet.conf worker configuration file can be tampered with. Make sure to set the permission to 644 or more restrictive.
+- Repudiation - Unauthorized changes may be made to the API server. This can be mitigated by making sure only trusted callers can authenticate to the API server by enforcing TLS.
+- Information Disclosure - Kube-proxy can expose sensitive information. To ensure the kube-proxy does not expose information, the --kubeconfig should be set to permissions 644 or less permissive.
+- Elevation of Privilege - privilege can be abused by using the privileged flag. This should be avoided in all cases. This affects kube-apiserver.
 
 Docker-bench Run Results and Analysis
 From the failed findings, select and document 3 findings from the Docker-bench results that you want to harden based on the 5 attack surface areas you identified in Step 1. At least 1 of the 3 hardened findings should be different from the ones mentioned in the exercise (i.e. 5.10, 5.14, and 5.22).
